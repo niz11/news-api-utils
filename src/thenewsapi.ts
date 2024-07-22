@@ -10,9 +10,12 @@ const axios = require('axios');
  * @throws If an error occurs during the API request.
  */
 
+const baseUrl = 'https://api.thenewsapi.com/v1/news/';
+
 const getTopStories = async (apiToken: string, locale = 'us', limit = 3): Promise<any> => { 
-    
-    const url = `https://api.thenewsapi.com/v1/news/top?api_token=${apiToken}&locale=${locale}&limit=${limit}`;
+    const params = new URLSearchParams({api_token: apiToken, locale: locale, limit: limit.toString()});
+    const endpoint = `${baseUrl}top`;
+    const url = `${endpoint}?${params}`;
     try {  
         const response = await axios.get(url);
         return response?.data || [];
@@ -23,7 +26,9 @@ const getTopStories = async (apiToken: string, locale = 'us', limit = 3): Promis
 }
 
 const getAllNews = async (apiToken: string, language = 'en', limit = 3): Promise<any> => {
-    const url = `https://api.thenewsapi.com/v1/news/all?api_token=${apiToken}&language=${language}&limit=${limit}`;
+    const params = new URLSearchParams({api_token: apiToken, language: language, limit: limit.toString()});
+    const endpoint = `${baseUrl}all`;
+    const url = `${endpoint}?${params}`;
     try {
         const response = await axios.get(url);
         return response?.data || [];
