@@ -39,6 +39,7 @@ const getTopStories = async (options: ParamsObjectType): Promise<any> => {
         }
         return acc;
     }, {} as { [key: string]: any });
+    
     const params = new URLSearchParams(filteredParamsObject);
     const endpoint = `${baseUrl}top`;
     const url = `${endpoint}?${params}`;
