@@ -4,8 +4,6 @@ import { ParamsObjectType } from './thenewsapiTypes';
  * Retrieves the top news stories using thenewsapi API.
  * 
  * @param apiToken - The API token to authenticate the request.
- * @param locale - The locale code for the news locale (default: 'us').
- * @param limit - The maximum number of news stories to retrieve (default: 3).
  * @returns A Promise that resolves to an array of top news stories.
  * @throws If an error occurs during the API request.
  */
@@ -14,8 +12,9 @@ const baseUrl = 'https://api.thenewsapi.com/v1/news/';
 
 const getTopStoriesParamsHelp = () => {
     return {
+        generalNote: "NO need to URL encode the values. The function will handle that for you.",
         apiToken: 'Your API token which can be found on your account dashboard.',
-        search: 'Use the search as a basic search tool by entering regular search terms or it has more advanced usage to build search queries: + signifies AND operation, | signifies OR operation, - negates a single token, \" wraps a number of tokens to signify a phrase for searching. * at the end of a term signifies a prefix query, ( and ) signify precedence. When using special characters (+, -, |, ", *, ()) you MUST URL-encode this parameter.',
+        search: 'Use the search as a basic search tool by entering regular search terms or it has more advanced usage to build search queries: + signifies AND operation, | signifies OR operation, - negates a single token, \" wraps a number of tokens to signify a phrase for searching. * at the end of a term signifies a prefix query, ( and ) signify precedence. When using special characters (+, -, |, ", *, ()).',
         search_fields: "Comma separated list of fields to apply the search parameter to. Supported fields: title | description | keywords | main_text. E.g. search_fields=title,description",
         locale: 'Comma separated list of country codes to include in the result set. Default is all countries.',
         categories: 'Comma separated list of category codes to include in the result set. Default is all categories. Supported categories: general | science | sports | business | health | entertainment | tech | politics | food | trave. E.g. categories=general,science',
@@ -32,16 +31,21 @@ const getTopStoriesParamsHelp = () => {
         page: 'Specify the page number of the results you want to return. Default is 1.',
     }
 }
-const getTopStories = async (options: ParamsObjectType): Promise<any> => { 
+
+const buildUrl = (endpoint: string, options: ParamsObjectType): string => {
     const filteredParamsObject = Object.keys(options).reduce((acc, key) => {
         if (options[key] !== undefined) {
             acc[key] = options[key];
         }
         return acc;
     }, {} as { [key: string]: any });
+    
     const params = new URLSearchParams(filteredParamsObject);
+    return `${endpoint}?${params}`;
+}
+const getTopStories = async (options: ParamsObjectType): Promise<any> => { 
     const endpoint = `${baseUrl}top`;
-    const url = `${endpoint}?${params}`;
+    const url = buildUrl(endpoint, options);
     try {  
         const response = await axios.get(url);
         return response?.data || [];
@@ -51,10 +55,9 @@ const getTopStories = async (options: ParamsObjectType): Promise<any> => {
     }
 }
 
-const getAllNews = async (apiToken: string, language = 'en', limit = 3): Promise<any> => {
-    const params = new URLSearchParams({api_token: apiToken, language: language, limit: limit.toString()});
+const getAllNews = async (options: ParamsObjectType): Promise<any> => {
     const endpoint = `${baseUrl}all`;
-    const url = `${endpoint}?${params}`;
+    const url = buildUrl(endpoint, options);
     try {
         const response = await axios.get(url);
         return response?.data || [];
@@ -64,4 +67,16 @@ const getAllNews = async (apiToken: string, language = 'en', limit = 3): Promise
     }
 }
 
-export {getTopStoriesParamsHelp, getTopStories, getAllNews};
+const getSimilarStoriesByUUID = async (uuid: string, options: ParamsObjectType): Promise<any> => {
+    const endpoint = `${baseUrl}similar/${uuid}`;
+    const url = buildUrl(endpoint, options);
+    try {
+        const response = await axios.get(url);
+        return response?.data || [];
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+export {getTopStoriesParamsHelp, getTopStories, getAllNews, getSimilarStoriesByUUID};
