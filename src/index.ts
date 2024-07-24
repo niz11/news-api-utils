@@ -1,8 +1,6 @@
-import {getTopStories, getAllNews} from './thenewsapi';
-import {add} from './utils';
+import {getTopStoriesParamsHelp, getTopStories, getAllNews} from './thenewsapi';
 
-
-export {add, getTopStories, getAllNews};
+export {getTopStoriesParamsHelp, getTopStories, getAllNews};
   
 
 
