@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getTopStories, getAllNews } from "../src/index";
+import { getTopStories, getAllNews, getSimilarStoriesByUUID } from "../src/index";
 import { ParamsObjectType } from "../src/thenewsapiTypes";
 
 jest.mock("axios");
@@ -82,7 +82,7 @@ describe("getTopStories", () => {
   });
 });
 
-describe("getAllNews", () => {
+describe("getSimilarStoriesByUUID", () => {
   it("fetches all news correctly with some params", async () => {
     const baseUrl = "https://api.thenewsapi.com/v1/news/all?";
     const expectedUrl = `${baseUrl}api_token=${apiToken}&search=usd+%2B+gbp+-cad&categories=science%2Csports&published_after=2024-07-23T10%3A00%3A00`;
@@ -94,6 +94,23 @@ describe("getAllNews", () => {
       published_after: "2024-07-23T10:00:00",
     };
     const result = await getAllNews(paramsObject);
+    expect(axios.get).toHaveBeenCalledWith(expectedUrl);
+    expect(result).toEqual(responseData);
+  });
+});
+
+describe("getSimilarStoriesByUUID", () => {
+  it("fetches all news correctly with some params", async () => {
+    const baseUrl = "https://api.thenewsapi.com/v1/news/similar/xxxx?";
+    const expectedUrl = `${baseUrl}api_token=${apiToken}&search=usd+%2B+gbp+-cad&categories=science%2Csports&published_after=2024-07-23T10%3A00%3A00`;
+    mockedAxios.get.mockResolvedValueOnce({ data: responseData });
+    const paramsObject: ParamsObjectType = {
+      api_token: apiToken,
+      search: "usd + gbp -cad",
+      categories: "science,sports",
+      published_after: "2024-07-23T10:00:00",
+    };
+    const result = await getSimilarStoriesByUUID('xxxx', paramsObject);
     expect(axios.get).toHaveBeenCalledWith(expectedUrl);
     expect(result).toEqual(responseData);
   });

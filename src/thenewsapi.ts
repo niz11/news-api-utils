@@ -67,4 +67,16 @@ const getAllNews = async (options: ParamsObjectType): Promise<any> => {
     }
 }
 
-export {getTopStoriesParamsHelp, getTopStories, getAllNews};
+const getSimilarStoriesByUUID = async (uuid: string, options: ParamsObjectType): Promise<any> => {
+    const endpoint = `${baseUrl}similar/${uuid}`;
+    const url = buildUrl(endpoint, options);
+    try {
+        const response = await axios.get(url);
+        return response?.data || [];
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+export {getTopStoriesParamsHelp, getTopStories, getAllNews, getSimilarStoriesByUUID};
