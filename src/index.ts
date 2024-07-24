@@ -1,6 +1,7 @@
 import {getTopStoriesParamsHelp, getTopStories, getAllNews, getSimilarStoriesByUUID} from './thenewsapi';
+import {ParamsObjectType} from './thenewsapiTypes';
 
-export {getTopStoriesParamsHelp, getTopStories, getAllNews, getSimilarStoriesByUUID};
+export {ParamsObjectType, getTopStoriesParamsHelp, getTopStories, getAllNews, getSimilarStoriesByUUID};
   
 
 
