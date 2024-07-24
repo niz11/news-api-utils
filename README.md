@@ -1,4 +1,4 @@
 Simple implementations of News APIs:
 
-1. [text](https://www.thenewsapi.com/documentation)
+1. [thenewsapi](https://www.thenewsapi.com/documentation)
 
