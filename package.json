@@ -1,6 +1,6 @@
 {
   "name": "top-news",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Get Top news of the world. ",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
