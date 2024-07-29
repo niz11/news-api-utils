@@ -10,6 +10,11 @@
     "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
     "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
     "strict": true,                                      /* Enable all strict type-checking options. */
+    "rootDir": "./src", // Ensures the root directory for input files"
+    "baseUrl": ".", // Allows using paths for module resolution
+    "paths": {
+      "news-api-utils/thenewsapi": ["dist/thenewsapi"],
+    }
   },
   "include": ["src/**/*"],
   "exclude": [
