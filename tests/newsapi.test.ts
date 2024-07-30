@@ -1,6 +1,6 @@
 import axios from "axios";
-import { getTopStories, getAllNews, getSimilarStoriesByUUID } from "../src/index";
-import { ParamsObjectType } from "../src/thenewsapiTypes";
+import { getTopStories, getAllNews, getSimilarStoriesByUUID } from "../src/thenewsapi";
+import { ParamsObjectType } from "../src/thenewsapi/thenewsapiTypes";
 
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;

@@ -1,7 +1,7 @@
 {
-  "name": "top-news",
-  "version": "1.0.4",
-  "description": "Get Top news of the world. ",
+  "name": "news-api-utils",
+  "version": "1.0.6",
+  "description": "Implementation of news api utils in ts. ",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
